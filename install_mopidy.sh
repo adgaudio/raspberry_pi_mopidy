@@ -12,11 +12,10 @@ wget -q -O - http://apt.mopidy.com/mopidy.gpg | sudo apt-key add -
 sudo wget -q -O /etc/apt/sources.list.d/mopidy.list http://apt.mopidy.com/mopidy.list
 sudo apt-get update
 sudo apt-get install -y mopidy
-mkdir -p Music
-mkdir -p mopidy/playlists
+mkdir -p ~/Music
+mkdir -p ~/mopidy/playlists
 
-sudo update-rc.d mopidy defaults
-
+git clone https://github.com/woutervanwijk/Mopidy-Webclient.git
 # Create the mopidy config file...
 mkdir -p ~/.config/mopidy
 cat << EOF | tee ~/.config/mopidy/mopidy.conf
@@ -28,10 +27,10 @@ max_connections = 20
 connection_timeout = 60
 
 [http]
-enabled = false
+enabled = true
 hostname = ::
 port = 6680
-static_dir = /home/pi/rompr
+static_dir = /home/pi/Mopidy-Webclient/webclient
 
 [local]
 enabled = false
