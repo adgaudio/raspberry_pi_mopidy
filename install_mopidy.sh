@@ -15,56 +15,6 @@ sudo apt-get install -y mopidy
 mkdir -p Music
 mkdir -p mopidy/playlists
 
-# create the /etc/init.d file and have it automatically start mopidy on boot
-cat << EOF | sudo tee /etc/init.d/mopidy
-#! /bin/sh
-
-### BEGIN INIT INFO
-# Provides: mopidy
-# Required-Start: sshd
-# Required-Stop: sshd
-# Default-Start: 2 3 4 5
-# Default-Stop: 0 1 6
-# Short-Description: Mopidy - Music Player Daemon
-# Description: Mopidy is a MPD (Music Player Daemon) that receives instructions from
-#  one or more MPD clients (ie rompr, mpdroid, etc) and then plays the requested
-#  music.  If configured, it can connect to Spotify, Last.fm, and others.
-### END INIT INFO
-#
-# Script Author:    Alex Gaudio <adgaudio@gmail.com>
-#
-# /etc/init.d/mopidy
-
-# The following part carries out specific functions depending on arguments.
-
-case "\$1" in
-  start)
-    echo "Starting mopidy"
-    exec sudo -u pi mopidy 2>/home/pi/mopidy.stderr.log 1>/home/pi/mopidy.stdout.log &
-    echo "mopidy is alive"
-    ;;
-  stop)
-    echo "Stopping mopidy"
-    pkill -f `which mopidy` || echo "mopidy already not running"
-    echo "mopidy is dead"
-    ;;
-  restart)
-    echo "Restarting mopidy"
-    pkill -f `which mopidy` || echo "mopidy already not running"
-    echo " ...starting..."
-    exec sudo -u pi mopidy 2>/home/pi/mopidy.stderr.log 1>/home/pi/mopidy.stdout.log &
-    echo "done"
-    ;;
-  *)
-    echo "Usage: /etc/init.d/mopidy {start|stop|restart}"
-    exit 1
-    ;;
-esac
-
-exit 0
-EOF
-sudo chmod +x /etc/init.d/mopidy
-
 sudo update-rc.d mopidy defaults
 
 # Create the mopidy config file...
