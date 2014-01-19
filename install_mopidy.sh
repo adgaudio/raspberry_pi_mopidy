@@ -14,6 +14,7 @@ sudo apt-get update
 sudo apt-get install -y mopidy mopidy-spotify
 mkdir -p ~/Music
 mkdir -p ~/mopidy/playlists
+sudo chmod -R 777 ~/mopidy
 
 git clone https://github.com/woutervanwijk/Mopidy-Webclient.git
 # Create the mopidy config file...
