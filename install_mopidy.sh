@@ -52,5 +52,6 @@ debug_file = /home/pi/mopidy.log
 [audio]
 output = alsasink
 EOF
+mopidy-convert-config
 
 sudo /etc/init.d/mopidy start
