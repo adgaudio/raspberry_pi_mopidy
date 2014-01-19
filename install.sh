@@ -25,3 +25,11 @@ sh install_rompr.sh
 # bug fix apache
 grep ServerName /etc/apache2/apache2.conf || (echo "ServerName localhost" | sudo tee -a /etc/apache2/apache2.conf)
 sudo /etc/init.d/apache2 restart
+
+ip=`hostname`
+echo ""
+echo "You have two webclients available:"
+echo "http://$ip/rompr"
+echo "http://$ip:6680"
+echo ""
+echo "And the mopidy mpd client on port: 6600"
