@@ -11,7 +11,7 @@ grep -E "^ipv6" /etc/modules || (echo ipv6 | sudo tee -a /etc/modules)
 wget -q -O - http://apt.mopidy.com/mopidy.gpg | sudo apt-key add -
 sudo wget -q -O /etc/apt/sources.list.d/mopidy.list http://apt.mopidy.com/mopidy.list
 sudo apt-get update
-sudo apt-get install -y mopidy
+sudo apt-get install -y mopidy mopidy-spotify
 mkdir -p ~/Music
 mkdir -p ~/mopidy/playlists
 
