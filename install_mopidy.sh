@@ -37,8 +37,9 @@ static_dir = /home/pi/Mopidy-Webclient/webclient
 
 [local]
 enabled = false
-media_dir = /home/pi/Music
-playlists_dir = /home/pi/mopidy/playlists
+data_dir = /var/lib/mopidy/local
+media_dir = /var/lib/mopidy/media
+playlists_dir = /var/lib/mopidy/playlists
 tag_cache_file = /home/pi/mopidy/tag_cache
 
 [spotify]
@@ -50,10 +51,23 @@ username = $lastfm_user
 password = $lastfm_pw
 
 [logging]
-debug_file = /home/pi/mopidy.log
+debug_file = /var/log/mopidy/mopidy-debug.log
+config_file = /etc/mopidy/logging.conf
 
 [audio]
 output = alsasink
+
+[stream]
+enabled = true
+protocols =
+    file
+    http
+    https
+    mms
+    rtmp
+    rtmps
+    rtsp
+timeout = 5000
 EOF
 sudo chmod 777 ~/.config/mopidy/mopidy.conf
 
