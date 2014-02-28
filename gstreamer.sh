@@ -5,7 +5,7 @@
 # For example, I can run the spotify app on my computer and hear sound throughi
 # my room speakers without touching any wires!
 #
-# Gstreamer code comes from this page:
+# Gstreamer code almost entirely comes from this page:
 # http://stackoverflow.com/questions/14140893/gstreamer-stream-vorbis-encoded-audio-over-network
 
 #
@@ -47,6 +47,7 @@ connect() {
   server_port=$2
 
   gst-launch-0.10 pulsesrc device="null_sink.monitor" ! \
+  queue max-size-time=100000000 ! \
   audio/x-raw-int, endianness="(int)1234", \
     signed="(boolean)true", width="(int)16", \
     depth="(int)16", rate="(int)22000", channels="(int)1" ! \
@@ -69,8 +70,8 @@ do_while_streaming_audio() {
 
   trap "pacmd set-default-sink $orig_sink" EXIT
   pacmd set-default-sink $new_sink
+  $($@ ) &
   connect $server_ip $server_port || return 1
-  $@
 }
 
 #do_while_streaming_audio spotify
@@ -79,6 +80,7 @@ do_while_streaming_audio() {
 run_server() {
   while true ; do
     gst-launch-0.10 tcpserversrc host=0.0.0.0 port=3000 \
+      ! queue max-size-time=100000000 \
       ! oggdemux \
       ! vorbisdec \
       ! audioconvert \
